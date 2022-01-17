@@ -562,7 +562,10 @@ abstract class PDOConnection extends Connection
             return $this->links[$linkNum];
         } catch (\PDOException $e) {
             if ($autoConnection) {
-                $this->db->log($e->getMessage(), 'error');
+                if (extension_loaded('SeasLog')) {
+                    \SeasLog::error($e->getMessage());
+                }
+//                $this->db->log($e->getMessage(), 'error');
                 return $this->connect($autoConnection, $linkNum);
             } else {
                 throw $e;

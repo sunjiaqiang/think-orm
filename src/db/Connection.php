@@ -253,7 +253,7 @@ abstract class Connection implements ConnectionInterface
                 if(extension_loaded('SeasLog')) {
                     \SeasLog::log('SQL', $sql . ' [ ' . $master . 'RunTime:' . $time . 's ]');
                 }
-                
+
 //                $this->db->log($sql . ' [ ' . $master . 'RunTime:' . $time . 's ]');
             };
         }
