@@ -236,7 +236,10 @@ abstract class Connection implements ConnectionInterface
         if (empty($listen)) {
             $listen[] = function ($sql, $time, $master) {
                 if (0 === strpos($sql, 'CONNECT:')) {
-                    $this->db->log($sql);
+                    if(extension_loaded('SeasLog')) {
+                        \SeasLog::log('SQL', $sql);
+                    }
+//                    $this->db->log($sql);
                     return;
                 }
 
@@ -247,8 +250,10 @@ abstract class Connection implements ConnectionInterface
                 } else {
                     $master = '';
                 }
-
-                $this->db->log($sql . ' [ ' . $master . 'RunTime:' . $time . 's ]');
+                if(extension_loaded('SeasLog')) {
+                    \SeasLog::log('SQL', $sql . ' [ ' . $master . 'RunTime:' . $time . 's ]');
+                }
+//                $this->db->log($sql . ' [ ' . $master . 'RunTime:' . $time . 's ]');
             };
         }
 
